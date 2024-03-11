@@ -39,6 +39,9 @@ public:
     bool name_entered;
     void renderPlayerDataText();
     void player_turns();
+    void play_again();
+    void display_data();
+    void exit_game();
 
     // Additional ImGui-related variables or methods as needed
 };

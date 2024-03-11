@@ -1,5 +1,5 @@
 #pragma once
-
+#include "json.hpp"
 #include <iostream>
 #include <fstream>
 #include <map>
@@ -17,9 +17,10 @@ public:
     const std::map<std::string, std::tuple<char, std::string>>& getPlayerData() const;
     void readPlayerData();
 
-private:
+
     std::map<std::string, std::tuple<char, std::string>> playerData;
 
     void saveToFile();
     void loadFromFile();
+    void reset_db();
 };

@@ -38,6 +38,9 @@ GUI::GUI(TicTacToe*& game) : game(&game), database(), symbol_selected(false), co
     ImFont* font4 = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\impact.ttf", 90.0f, nullptr, io.Fonts->GetGlyphRangesCyrillic());
     my_fonts.push_back(font4);
 
+    ImFont* font5 = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\impact.ttf", 18.0f, nullptr, io.Fonts->GetGlyphRangesCyrillic());
+    my_fonts.push_back(font5);
+
     if (!my_fonts.data()) {
         std::cerr << "Failed to load font file." << std::endl;
         std::exit(EXIT_FAILURE);
@@ -57,9 +60,23 @@ GUI::~GUI() {
 
 void GUI::reset()
 {
+    ImGui::SetNextWindowPos(ImVec2((1920 - 110) * 0.5f, (1080 + 800) * 0.5f), ImGuiCond_Always);
+    ImGui::SetNextWindowSize(ImVec2(620, 620), ImGuiCond_Always);
     ImGui::Begin("reset", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoBackground);
 
-    if (ImGui::Button("RESET", ImVec2(100, 100)))
+    ImGuiStyle& style = ImGui::GetStyle();
+    ImGui::PushFont(ImGui::GetIO().Fonts->Fonts[4]);
+    //style.ItemSpacing = ImVec2(100.0f, 100.0f);
+    style.Colors[ImGuiCol_Button] = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
+    style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);
+    ImVec4 buttonColor = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
+    ImVec4 borderColor = ImVec4(1.0f, 0.5f, 0.8f, 1.0f);
+    ImGui::PushStyleColor(ImGuiCol_Button, buttonColor);
+    ImGui::PushStyleColor(ImGuiCol_Border, borderColor);
+    ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 4.0f);
+
+    // ImGui::SetCursorPos(ImVec2(ImGui::GetWindowContentRegionMax().x - 120, ImGui::GetWindowContentRegionMax().y -500));
+    if (ImGui::Button("RESET", ImVec2(100, 30)))
     {
         game_mode = 0;
         symbol_selected = false;
@@ -67,12 +84,18 @@ void GUI::reset()
         name_entered = false;
         (*game)->reset();
         name[0] = '\0';
+        game_over = false;
 
     }
+
+    ImGui::PopStyleColor();
+    ImGui::PopFont();
+    ImGui::PopStyleVar();
+    ImGui::PopStyleColor();
     // ImGui::PopStyleColor(2);
 
     ImGui::End();
-
+    
 }
 
 void GUI::renderSettings() {
@@ -91,8 +114,9 @@ void GUI::renderSettings() {
     ImGui::PopFont();
     ImGui::PopStyleColor(2);
     ImGui::End();
-    ImGui::SetNextWindowSize(ImVec2(500, 900), ImGuiCond_Always);
 
+    ImGui::SetNextWindowSize(ImVec2(500, 900), ImGuiCond_Always);
+    ImGui::SetNextWindowPos(ImVec2((1920 -1700) * 0.5f, (1080 - 650) * 0.5f), ImGuiCond_Always);
 //////////////////////////////////////////////SETTINGS WINDOW/////////////////////////////
     ImGui::Begin("settings", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoBackground);
     ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
@@ -100,20 +124,33 @@ void GUI::renderSettings() {
     style.ItemSpacing = ImVec2(13.0f, 3.0f);
 
 //////////////////////////NAME////////////////////////
-
+	ImGui::SetNextWindowPos(ImVec2((1920 + 960) * 0.5f, (1080 - 650) * 0.5f), ImGuiCond_Always);
+	ImGui::SetNextWindowSize(ImVec2(500, 100), ImGuiCond_Always);
+    ImGui::Begin("name_field", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoBackground);
 	if(!name_entered)
     {
+        ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.0f, 0.0f, 0.0f, 1.0f)); // Black background
+        ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(1.0f, 0.5f, 0.8f, 1.0f)); // Pink border
+
 	    ImGui::Text("Enter your name:");
+       // ImVec2 inputSize(200, ImGui::GetTextLineHeightWithSpacing());
         if (ImGui::InputText("##name", name, sizeof(name), ImGuiInputTextFlags_EnterReturnsTrue)) {
 
             name_entered = true;
             std::cout<< "Name entered: " << name;
         }
+        ImGui::PopStyleColor(2);
     }
     if(name_entered)
     {
-    	ImGui::Text("Current Player: %s", name);
-    }
+			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.5f, 0.8f, 1.0f));
+			ImGui::Text(" ");
+    		ImGui::Text("CURRENT PLAYER: %s", name);
+            ImGui::PopStyleColor();
+	    }
+    ImGui::End();
+
+    //W:# L:# T:# 
 
 ////////////////MODE SELECTION////////////////////////
     if (game_mode == 0) { // game mode not selected yet
@@ -127,7 +164,8 @@ void GUI::renderSettings() {
 
         ImGui::PushStyleColor(ImGuiCol_Button, buttonColor);
         ImGui::PushStyleColor(ImGuiCol_Border, borderColor);
-
+        ImGui::Spacing();
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 65.0f);
         if (ImGui::Button("3x3", ImVec2(100, 100))) {
             colour = ImVec4(1.0f, 0.0f, 0.0f, 1.0f);
             game_mode = 3;
@@ -135,7 +173,10 @@ void GUI::renderSettings() {
             symbol_selected = false;
 
         }
-        ImGui::SameLine();
+        ImGui::SameLine(NULL, 30);
+         // Keep the next button on the same line
+        //ImGui::Dummy(ImVec2(1, 0)); // Add 10 units of horizontal space
+
         if (ImGui::Button("5x5", ImVec2(100, 100))) {
             colour = ImVec4(1.0f, 0.0f, 0.0f, 1.0f);
             game_mode = 5;
@@ -158,6 +199,9 @@ void GUI::renderSettings() {
     if (!symbol_selected && game_mode != 0) {
         ImGui::Text("Select your symbol:");
 
+        ImGui::Spacing();
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 65.0f);
+
         if (ImGui::Button("X", ImVec2(100, 100))) {
             colour = ImVec4(1.0f, 0.0f, 0.0f, 1.0f);
             (*game)->human = 'X';
@@ -166,7 +210,7 @@ void GUI::renderSettings() {
             symbol_selected = true;
         }
 
-        ImGui::SameLine();
+        ImGui::SameLine(NULL,30);
 
         if (ImGui::Button("O", ImVec2(100, 100))) {
             colour = ImVec4(1.0f, 0.0f, 0.0f, 1.0f);
@@ -257,21 +301,6 @@ void GUI::player_turns()
     }
     ImGui::End();
 }
-//
-//void GUI::renderPlayerDataText() {
-//    ImGui::Begin("Player Data");
-//    //std::cout << "hello";
-//    for (const auto& entry : database.getPlayerData()) {
-//        const std::string& playerName = entry.first;
-//        char symbol = std::get<0>(entry.second);
-//        bool won = std::get<1>(entry.second);
-//        std::string gameMode = std::get<2>(entry.second);
-//
-//        ImGui::Text("Player: %s | Symbol: %c | Won: %s | Game Mode: %s", playerName.c_str(), symbol, won ? "Yes" : "No", gameMode.c_str());
-//    }
-//
-//    ImGui::End();
-//}
 
 
 ///////////////////////////////////////////////////////////3X3 GAME////////////////////////////////////////
@@ -369,7 +398,7 @@ void GUI::renderResults(){
     ImGui::Begin("result", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoBackground);
 	ImGuiStyle& style = ImGui::GetStyle();
 	style.WindowBorderSize = 0.0f;
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+   // ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
     ImGui::PushFont(ImGui::GetIO().Fonts->Fonts[2]);
 
     char winner = (*game)->check_win().first;
@@ -378,6 +407,7 @@ void GUI::renderResults(){
     if(winner == (*game)->human)
     {
     	winner_person = "You";
+
     }
     else if(winner == (*game)->ai)
     {
@@ -387,41 +417,127 @@ void GUI::renderResults(){
     if (winner == 'X' || winner == 'O')
     {
         ImGui::Text("%s, won!", winner_person.c_str());
+        play_again();
 
     }
     else if (winner == 'T')
     {
         ImGui::Text("It's a tie!");
+        play_again();
     }
     else
     {
 	    ImGui::Text(" ");
     }
     ImGui::PopFont();
-    ImGui::PopStyleVar();
+   // ImGui::PopStyleVar();
     ImGui::End();
+}
 
-    ImGui::Begin("replay");
-    ImGui::Text("Play again?");
+void GUI::play_again()
+{
+	ImGui::SetNextWindowPos(ImVec2((1920 - 1700) * 0.5f, (1080 - 650) * 0.5f), ImGuiCond_Always);
+    ImGui::SetNextWindowSize(ImVec2(500, 600), ImGuiCond_Always);
+    //////////////////////////
+	ImGui::Begin("replay", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoBackground);
+    ImGui::PushFont(ImGui::GetIO().Fonts->Fonts[2]);
+    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 30.0f);
+    ImGuiStyle& style = ImGui::GetStyle();
+    style.ItemSpacing = ImVec2(13.0f, 3.0f);
+
+    ImGui::Text("Start a new game?");
+    ImGui::Spacing();
+
+    
+    style.Colors[ImGuiCol_Button] = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
+    style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);
+    ImVec4 buttonColr = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
+    ImVec4 borderColr = ImVec4(1.0f, 0.5f, 0.8f, 1.0f);
+
+    ImGui::PushStyleColor(ImGuiCol_Button, buttonColr);
+    ImGui::PushStyleColor(ImGuiCol_Border, borderColr);
+    ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 4.0f);
+    ImGui::Spacing();
+	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 65.0f);
+    
     if (ImGui::Button("YES", ImVec2(100, 100))) {
         colour = ImVec4(1.0f, 0.0f, 0.0f, 1.0f);
-        
+
         game_mode = 0;
         symbol_selected = false;
         color_selected = false;
         name_entered = false;
         (*game)->reset();
+        game_over = false;
     }
 
-    ImGui::SameLine();
+    ImGui::SameLine(NULL, 30);
 
     if (ImGui::Button("NO", ImVec2(100, 100))) {
         colour = ImVec4(1.0f, 0.0f, 0.0f, 1.0f);
         exit(0);
     }
 
+    ImGui::PopFont();
+    ImGui::PopStyleVar();
+    ImGui::PopStyleColor(2);
+
     ImGui::End();
 }
+///////////////////////////////////////////////////////////////////DATABASE WINDOW////////////////////////////////////////////
+void GUI::display_data()
+{
+    ImGui::SetNextWindowPos(ImVec2((1920 + 960) * 0.5f, (1080 - 500) * 0.5f), ImGuiCond_Always);
+    ImGui::SetNextWindowSize(ImVec2(500, 500), ImGuiCond_Always);
+    ImGui::Begin("database", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground);
+    ImGui::Text("PLAYER STATS");
+
+	database.readPlayerData();
+
+    const auto& playerData = database.getPlayerData();
+
+    for (const auto& entry : playerData) {
+        std::string name = entry.first;
+        char symbol = std::get<0>(entry.second); // Access first element of tuple
+        std::string result = std::get<1>(entry.second); // Access second element of tuple
+
+        std::string text = "Name: " + name + " Symbol: " + std::string(1, symbol) + " Result: " + result;
+        ImGui::Text("%s", text.c_str());
+    }
+
+    ImGui::End();
+
+    ImGui::SetNextWindowPos(ImVec2((1920 + 1400) * 0.5f, (1080 + 800) * 0.5f), ImGuiCond_Always);
+    ImGui::SetNextWindowSize(ImVec2(620, 620), ImGuiCond_Always);
+    ImGui::Begin("clearbtn", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoBackground);
+    ImGuiStyle& style = ImGui::GetStyle();
+    ImGui::PushFont(ImGui::GetIO().Fonts->Fonts[4]);
+    //style.ItemSpacing = ImVec2(100.0f, 100.0f);
+    style.Colors[ImGuiCol_Button] = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
+    style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);
+    ImVec4 buttonColor = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
+    ImVec4 borderColor = ImVec4(1.0f, 0.5f, 0.8f, 1.0f);
+    ImGui::PushStyleColor(ImGuiCol_Button, buttonColor);
+    ImGui::PushStyleColor(ImGuiCol_Border, borderColor);
+    ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 4.0f);
+
+   // ImGui::SetCursorPos(ImVec2(ImGui::GetWindowContentRegionMax().x - 120, ImGui::GetWindowContentRegionMax().y -500));
+    if (ImGui::Button("CLEAR", ImVec2(100, 30))) {
+        colour = ImVec4(1.0f, 0.0f, 0.0f, 1.0f);
+
+        database.reset_db();
+    }
+
+    ImGui::PopStyleColor();
+    ImGui::PopFont();
+    ImGui::PopStyleVar();
+    ImGui::PopStyleColor();
+
+    ImGui::End();
+}
+
+
+
 
 ///////////////////////////////////////////////5X5 GAME////////////////////////////////////////
 void GUI::renderGameBoardFive() {
@@ -481,6 +597,36 @@ void GUI::renderGameBoardFive() {
     ImGui::End();
 }
 
+void GUI::exit_game()
+{
+    ImGui::SetNextWindowPos(ImVec2((1920 - 1600) * 0.5f, (1080 + 800) * 0.5f), ImGuiCond_Always);
+    ImGui::SetNextWindowSize(ImVec2(620, 620), ImGuiCond_Always);
+    ImGui::Begin("exit", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoBackground);
+	ImGuiStyle& style = ImGui::GetStyle();
+    ImGui::PushFont(ImGui::GetIO().Fonts->Fonts[4]);
+    //style.ItemSpacing = ImVec2(100.0f, 100.0f);
+    style.Colors[ImGuiCol_Button] = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
+    style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);
+    ImVec4 buttonColor = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
+    ImVec4 borderColor = ImVec4(1.0f, 0.5f, 0.8f, 1.0f);
+    ImGui::PushStyleColor(ImGuiCol_Button, buttonColor);
+    ImGui::PushStyleColor(ImGuiCol_Border, borderColor);
+    ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 4.0f);
+
+
+    if (ImGui::Button("EXIT", ImVec2(100, 30))) {
+        colour = ImVec4(1.0f, 0.0f, 0.0f, 1.0f);
+
+        exit(0);
+    }
+
+    ImGui::PopStyleColor();
+    ImGui::PopFont();
+    ImGui::PopStyleVar();
+    ImGui::PopStyleColor();
+    ImGui::End();
+}
+
 void GUI::run() {
     glfwSwapInterval(1);
 
@@ -492,8 +638,9 @@ void GUI::run() {
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-
+        exit_game();
         reset();
+        display_data();
       //  renderPlayerDataText();
         renderSettings();
         if (game_mode != 0) {
@@ -509,7 +656,9 @@ void GUI::run() {
         {
             database.writePlayerData(name, *game);
         	renderResults();
-            game_over= false;
+            //play_again();
+        	
+          //  game_over= false;
 		}   
 
 
