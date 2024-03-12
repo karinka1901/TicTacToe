@@ -1,23 +1,15 @@
 #include "Database.h"
 #include "TicTacToe.h"
-#include "json.hpp"
-#include <fstream>
-#include <iostream>
-#include <iomanip>
-
-
-using json = nlohmann::json;
-using namespace std; // Include the std namespace
 
 Database::Database() {
-    // Initialize as needed
+
 }
 
 Database::~Database() {
    
 }
 
-void Database::writePlayerData(const char* playerName, TicTacToe* game) {
+void Database::write_player_data(const char* playerName, TicTacToe* game) {
     if (game == nullptr) {
         cerr << "Error: TicTacToe game is not initialized." << endl;
         return;
@@ -45,11 +37,11 @@ void Database::writePlayerData(const char* playerName, TicTacToe* game) {
     saveToFile();
 }
 
-const map<string, tuple<char, string>>& Database::getPlayerData() const {
+const map<string, tuple<char, string>>& Database::get_player_data() const {
     return playerData;
 }
 
-void Database::readPlayerData() {
+void Database::read_player_data() {
     loadFromFile();
 }
 
@@ -65,13 +57,13 @@ void Database::saveToFile() {
         jsonData.push_back(playerEntry);
     }
 
-    ofstream outFile("game_stats.json");
+    ofstream outFile("stats.json");
     outFile << setw(4) << jsonData; 
     outFile.close();
 }
 
 void Database::loadFromFile() {
-    ifstream inFile("game_stats.json");
+    ifstream inFile("stats.json");
 
     if (inFile.is_open()) {
         json jsonData;
@@ -88,7 +80,7 @@ void Database::loadFromFile() {
         inFile.close();
     }
     else {
-        cerr << "Unable to open the file for reading. The file may not exist yet." << endl;
+        cerr << "cant open the file for reading" << endl;
     }
 }
 void Database::reset_db() {

@@ -1,5 +1,3 @@
-#include <ostream>
-#include <iostream>
 #include "ThreeByThree.h"
 
 using namespace std;
@@ -24,7 +22,7 @@ bool ThreeByThree::can_move() {
 pair<char, vector<pair<int, int>>> ThreeByThree::check_win() {
         char winner = '\0';
         free_cell = 0;
-        std::vector<std::pair<int, int>> winning_cells;
+        vector<pair<int, int>> winning_cells;
     
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 3; ++j) {
@@ -127,7 +125,7 @@ int ThreeByThree::minimax(vector<vector<char>>& board, int depth, bool isMaximiz
     }
 
     if (isMaximizing) { // AI is doing the action
-        int bestScore = INT_MIN; // Initialize bestScore to a very low value
+        int best_score = INT_MIN; // Initialize bestScore to a very low value
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board[i][j] == ' ') {
@@ -135,33 +133,33 @@ int ThreeByThree::minimax(vector<vector<char>>& board, int depth, bool isMaximiz
                     board[i][j] = ai; // Make a move
                     score = minimax(board, depth + 1, false); // Call minimax recursively with increased depth and opposite player
                     board[i][j] = ' '; // Undo the move
-                    if (score > bestScore) bestScore = score; // Update bestScore if needed
+                    if (score > best_score) best_score = score; // Update bestScore if needed
                 }
             }
         }
-        return bestScore; // Return the best score
+        return best_score; // Return the best score
     }
     else { // Human is doing the action
-        int bestScore = INT_MAX; // Initialize bestScore to a very high value
+        int best_score = INT_MAX; // Initialize bestScore to a very high value
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board[i][j] == ' ') {
                     board[i][j] = human; // Make a move
                     score = minimax(board, depth + 1, true); // Call minimax recursively with increased depth and opposite player
                     board[i][j] = ' '; // Undo the move
-                    if (score < bestScore) {
-                        bestScore = score; // Update bestScore if needed
+                    if (score < best_score) {
+                        best_score = score; // Update bestScore if needed
                     }
                 }
             }
         }
-        return bestScore; // Return the best score
+        return best_score; // Return the best score
     }
 }
 void ThreeByThree::ai_move()
 {
-    pair<int, int> bestMove = { -1, -1 };
-    int bestScore = INT_MIN; // Initialize bestScore to a very low value
+    pair<int, int> best_move = { -1, -1 };
+    int best_score = INT_MIN; // Initialize bestScore to a very low value
     for (int i = 0; i < 3; ++i) {
         for (int j = 0; j < 3; ++j) {
             if (board[i][j] == ' ') {
@@ -170,16 +168,16 @@ void ThreeByThree::ai_move()
                 int score = minimax(board, 0, false); // Pass depth as 0 for the first call
                 board[i][j] = ' '; // Undo the move
 
-                if (score > bestScore) {
-                    bestScore = score;
+                if (score > best_score) {
+                    best_score = score;
 
-                    bestMove = { i, j };
+                    best_move = { i, j };
                 }
             }
         }
     }
      // Make the best move
-    board[bestMove.first][bestMove.second] = ai;
+    board[best_move.first][best_move.second] = ai;
   //  std::cout << "AI chose move at (" << bestMove.first << ", " << bestMove.second << ")." << std::endl;
   
 }

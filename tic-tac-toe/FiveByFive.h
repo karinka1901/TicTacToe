@@ -1,6 +1,3 @@
-
-#include <vector>
-#include <ctime>
 #pragma once
 
 #include "TicTacToe.h"
@@ -8,17 +5,16 @@
 class FiveByFive : public TicTacToe {
 public:
 
-    int heuristic(int i, int j);
-    FiveByFive(); // Constructor
-    virtual void symbol_select() override;
-    virtual void switch_player() override;
-    virtual bool can_move() override;
-    //virtual char check_win() override;
-    virtual std::pair<char, std::vector<std::pair<int, int>>>check_win() override;
-    virtual int check_score(const std::vector<std::vector<char>>& board) override;
-    virtual void human_move(int row, int col) override;
-    virtual void ai_move() override;
-    int minimax(std::vector<std::vector<char>>& board, int depth, int alpha, int beta, bool isMaximizing);
+    FiveByFive();
+    void symbol_select() override;
+    void switch_player() override;
+    bool can_move() override;
+    pair<char, vector<pair<int, int>>>check_win() override;
+    int check_score(const vector<vector<char>>& board) override;
+    void human_move(int row, int col) override;
+    void ai_move() override;
+    int minimax(vector<vector<char>>& board, int depth, int alpha, int beta, bool isMaximizing);
     bool return_winner() override;
     void reset() override;
+    static bool compare_moves(const pair<int, int>& a, const pair<int, int>& b);
 };

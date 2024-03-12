@@ -1,15 +1,14 @@
 #ifndef GUI_H
 #define GUI_H
+#pragma once
 
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 #include <GLFW/glfw3.h>
-//#include <GL/glew.h>
-#pragma once
-//#include "Database.h"
 #include "TicTacToe.h"
 
+using namespace std;
 
 
 class GUI {
@@ -18,31 +17,28 @@ public:
     Database database;
     GUI(TicTacToe*& game);
     ~GUI();
-    char name[100] = "";
-    void run();
-    void printBoard();
-    void renderSettings();
-    void renderGameBoardThree();
-    void renderGameBoardFive();
-    void renderResults();
-    //TicTacToe& game;
     GLFWwindow* window;
-  //  float color;
     ImVec4 colour;
-    bool symbol_selected;
+
+	char name[100] = "";
+    void run();
+	bool symbol_selected;
     bool game_mode_selected;
     int game_mode;
     bool color_selected ;
     bool game_over;
-    void reset();
-    bool first_move;
+	bool first_move;
     bool name_entered;
-    void renderPlayerDataText();
+
+    void printBoard();
+    void render_settings();
+    void render_game_board_three();
+    void render_game_board_five();
+    void render_results();
+    void reset();
     void player_turns();
     void play_again();
     void display_data();
     void exit_game();
-
-    // Additional ImGui-related variables or methods as needed
 };
-#endif // GUI_H
+#endif  GUI_H

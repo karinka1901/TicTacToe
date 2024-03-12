@@ -1,0 +1,17 @@
+[
+    {
+        "name": "karinka",
+        "result": "LOSS",
+        "symbol": "O"
+    },
+    {
+        "name": "karinkaa",
+        "result": "LOSS",
+        "symbol": "X"
+    },
+    {
+        "name": "markku",
+        "result": "LOSS",
+        "symbol": " "
+    }
+]

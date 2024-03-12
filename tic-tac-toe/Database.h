@@ -4,8 +4,12 @@
 #include <fstream>
 #include <map>
 #include <tuple>
+#include "json.hpp"
+#include <iomanip>
 
-// Forward declaration of the TicTacToe class
+using json = nlohmann::json;
+using namespace std;
+
 class TicTacToe;
 
 class Database {
@@ -13,14 +17,12 @@ public:
     Database();
     ~Database();
 
-    void writePlayerData(const char* playerName, TicTacToe* game);
-    const std::map<std::string, std::tuple<char, std::string>>& getPlayerData() const;
-    void readPlayerData();
+	map<string, tuple<char, string>> playerData;
 
-
-    std::map<std::string, std::tuple<char, std::string>> playerData;
-
-    void saveToFile();
+    void write_player_data(const char* playerName, TicTacToe* game);
+    const map<string, tuple<char, string>>& get_player_data() const;
+    void read_player_data();
+	void saveToFile();
     void loadFromFile();
     void reset_db();
 };

@@ -1,8 +1,6 @@
-
 #include <ostream>
 #include <iostream>
 #include <cstdlib>  
-#include <ctime>
 #include "TicTacToe.h"
 #include "FiveByFive.h"
 #include "ThreeByThree.h"
@@ -12,7 +10,7 @@ using namespace std;
 
 TicTacToe::TicTacToe(int boardSize) : board(boardSize, vector<char>(boardSize, ' ')), human(' '), ai(' ') {}
 
-TicTacToe* TicTacToe::createGame(int game_mode) {
+TicTacToe* TicTacToe::create_game(int game_mode) {
     if (game_mode == 3) {
         return new ThreeByThree();
     }
@@ -45,11 +43,11 @@ bool TicTacToe::can_move() {
     for (const auto& row : board) {
         for (char cell : row) {
             if (cell == ' ') {
-                return true; // There is at least one empty cell
+                return true; //board is not full
             }
         }
     }
-    return false; // The board is full, and it's a tie
+    return false; //boar=rd is full
 }
 
 
@@ -102,16 +100,8 @@ void TicTacToe::reset()
 {
     cout << "Resetting the game" << endl;
     winner = check_win().first;
-    //free_cell = 0;
-    //ai = '\0';
-    //human= '\0';
     current_player = '\0';  
     winner = '\0';
-	/*for (int i = 0; i < board.size(); ++i) {
-        for (int j = 0; j < board.size(); ++j) {
-            board[i][j] = ' ';
-        }
-    }*/
     
 }
 
