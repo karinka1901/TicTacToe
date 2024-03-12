@@ -7,6 +7,8 @@
 
 class FiveByFive : public TicTacToe {
 public:
+
+    int heuristic(int i, int j);
     FiveByFive(); // Constructor
     virtual void symbol_select() override;
     virtual void switch_player() override;
@@ -16,7 +18,7 @@ public:
     virtual int check_score(const std::vector<std::vector<char>>& board) override;
     virtual void human_move(int row, int col) override;
     virtual void ai_move() override;
-    int minimax(std::vector<std::vector<char>>& board, int depth, bool isMaximizing);
+    int minimax(std::vector<std::vector<char>>& board, int depth, int alpha, int beta, bool isMaximizing);
     bool return_winner() override;
     void reset() override;
 };

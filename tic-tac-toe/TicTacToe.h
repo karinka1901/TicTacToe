@@ -3,10 +3,6 @@
 #include <iostream>
 #include "Database.h"
 
-
-
-
-
 class TicTacToe {
 public:
 	Database database;
@@ -29,7 +25,7 @@ public:
     virtual void ai_move() = 0;
     virtual void reset() = 0;
     virtual ~TicTacToe() = default;
-    virtual int minimax(std::vector<std::vector<char>>& board, int depth, bool isMaximizing) = 0;
+    //virtual int minimax(std::vector<std::vector<char>>& board, int depth, bool isMaximizing) = 0;
     static TicTacToe* createGame(int game_mode);
     int free_cell = 0;
 

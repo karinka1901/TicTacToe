@@ -16,7 +16,7 @@ public:
     virtual int check_score(const std::vector<std::vector<char>>& board) override;
     virtual void human_move(int row, int col) override;
     virtual void ai_move() override;
-    int minimax(vector<vector<char>>& board, int depth, bool isMaximizing);
+    int minimax(std::vector<std::vector<char>>& board, int depth, bool isMaximizing);
     virtual void reset() override;
     virtual bool return_winner() override;
 };
