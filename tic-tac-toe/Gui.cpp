@@ -139,7 +139,7 @@ void GUI::render_settings() {
         if (ImGui::InputText("##name", name, sizeof(name), ImGuiInputTextFlags_EnterReturnsTrue)) {
 
             name_entered = true;
-            cout << "Name entered: " << name;
+            cout << "Name entered: " << name<<endl;
         }
         ImGui::PopStyleColor(2);
     }
@@ -176,8 +176,6 @@ void GUI::render_settings() {
 
         }
         ImGui::SameLine(NULL, 30);
-         // Keep the next button on the same line
-        //ImGui::Dummy(ImVec2(1, 0)); // Add 10 units of horizontal space
 
         if (ImGui::Button("5x5", ImVec2(100, 100))) {
             colour = ImVec4(1.0f, 0.0f, 0.0f, 1.0f);
@@ -221,7 +219,7 @@ void GUI::render_settings() {
             (*game)->current_player = (*game)->human;
             symbol_selected = true;
         }
-
+        ///////////////////////random start////////////////////////
         //if (symbol_selected) {
         //    // Initialize random seed
         //    srand(time(0));
@@ -681,6 +679,12 @@ void GUI::exit_game()
     ImGui::End();
 }
 
+void GUI::updateAndRenderOutputText(const std::string& text) {
+    output_text += text + "\n"; // Append new text with a newline character
+    ImGui::Text(output_text.c_str()); // Render the output text
+}
+
+
 void GUI::run() {
     glfwSwapInterval(1);
 
@@ -692,6 +696,7 @@ void GUI::run() {
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
+   
         exit_game();
         reset();
         display_data();

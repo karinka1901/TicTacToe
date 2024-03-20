@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include "Database.h"
+#include "Gui.h"
 using  namespace std;
 
 class TicTacToe {

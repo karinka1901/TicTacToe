@@ -1,10 +1,10 @@
 #ifndef GUI_H
 #define GUI_H
 #pragma once
-
-#include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
+
+#include <imgui.h>
 #include <GLFW/glfw3.h>
 #include "TicTacToe.h"
 
@@ -29,6 +29,7 @@ public:
     bool game_over;
 	bool first_move;
     bool name_entered;
+	string output_text;
 
     void printBoard();
     void render_settings();
@@ -40,5 +41,8 @@ public:
     void play_again();
     void display_data();
     void exit_game();
+
+    void updateAndRenderOutputText(const string& text);
+    
 };
 #endif  GUI_H

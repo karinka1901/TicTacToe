@@ -63,23 +63,19 @@ void TicTacToe::human_move(int row, int col)
 int TicTacToe::check_score(const std::vector<std::vector<char>>& board) {
     char winner = check_win().first;
 
-    // Check if AI won
+   //AI won
     if (winner == ai) {
-      //  reset();
         return 1;
     }
-    // Check if human won
+    //human won
     if (winner == human) {
-        //reset();
         return -1;
     }
-    // Check if it's a tie
+    //tie
     if (!can_move()) {
-        //reset();
         return 0;
     }
 
-    // If the game is still in progress, return a neutral score
     return 0;
 }
 

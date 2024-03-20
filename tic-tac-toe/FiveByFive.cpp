@@ -107,7 +107,7 @@ bool FiveByFive::return_winner()
 }
 
 
-int FiveByFive::minimax(std::vector<std::vector<char>>& board, int depth, int alpha, int beta, bool isMaximizing)
+int FiveByFive::minimax(vector<vector<char>>& board, int depth, int alpha, int beta, bool isMaximizing)
 {
 
 	int score = 0;
@@ -123,6 +123,7 @@ int FiveByFive::minimax(std::vector<std::vector<char>>& board, int depth, int al
         else {
             score = 0;
         }
+        //return score;
         return score * 10 + depth;
     }
 
@@ -138,11 +139,12 @@ int FiveByFive::minimax(std::vector<std::vector<char>>& board, int depth, int al
                     board[i][j] = ai;
                     score = minimax(board, depth + 1, alpha, beta, false);
                     board[i][j] = ' ';
-                    best_score = std::max(best_score, score);
-                    alpha = std::max(alpha, best_score);
+                    best_score = max(best_score, score);
+                    alpha = max(alpha, best_score);
 
                     if (beta <= alpha) {
-                        break; // Beta cut-off
+                        
+                        break; 
                     }
                 }
             }
@@ -157,11 +159,12 @@ int FiveByFive::minimax(std::vector<std::vector<char>>& board, int depth, int al
                     board[i][j] = human;
                     score = minimax(board, depth + 1, alpha, beta, true);
                     board[i][j] = ' ';
-                    best_score = std::min(best_score, score);
-                    beta = std::min(beta, best_score);
+                    best_score = min(best_score, score);
+                    beta = min(beta, best_score);
 
                     if (beta <= alpha) {
-                        break; // Alpha cut-off
+                       
+                        break; 
                     }
                 }
             }
@@ -190,7 +193,7 @@ void FiveByFive::ai_move() {
             }
         }
     }
-    std::sort(moves.begin(), moves.end(), compare_moves);
+    sort(moves.begin(), moves.end(), compare_moves);
 
 
 
@@ -200,6 +203,7 @@ void FiveByFive::ai_move() {
         int j = move.second;
         board[i][j] = ai;
         int score = minimax(board, 0, INT_MIN, INT_MAX, false);
+       
         board[i][j] = ' ';
         if (score > best_score) {
             best_score = score;
@@ -209,7 +213,7 @@ void FiveByFive::ai_move() {
 
     // Make the best move
     board[best_move.first][best_move.second] = ai;
-    std::cout << "AI chose move at (" << best_move.first << ", " << best_move.second << ")." << std::endl;
+ //   std::cout << "AI chose move at (" << best_move.first << ", " << best_move.second << ")." << std::endl;
 }
 
  void FiveByFive::reset()

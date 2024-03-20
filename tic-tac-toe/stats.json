@@ -1,17 +1,12 @@
 [
     {
-        "name": "karinka",
-        "result": "LOSS",
-        "symbol": "O"
-    },
-    {
-        "name": "karinkaa",
-        "result": "LOSS",
+        "name": "",
+        "result": "TIE",
         "symbol": "X"
     },
     {
-        "name": "markku",
-        "result": "LOSS",
-        "symbol": " "
+        "name": "kjh",
+        "result": "TIE",
+        "symbol": "X"
     }
 ]
