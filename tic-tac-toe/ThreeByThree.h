@@ -13,7 +13,7 @@ public:
     virtual void switch_player() override;
     virtual bool can_move() override;
     virtual pair<char, vector<pair<int, int>>>check_win() override;
-    virtual int check_score(const vector<vector<char>>& board) override;
+    virtual int check_score() override;
     virtual void human_move(int row, int col) override;
     virtual void ai_move() override;
     int minimax(vector<vector<char>>& board, int depth, bool isMaximizing);

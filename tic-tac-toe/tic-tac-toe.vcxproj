@@ -130,8 +130,6 @@
     <ClCompile Include="FiveByFive.cpp" />
     <ClCompile Include="Database.cpp" />
     <ClCompile Include="Gui.cpp" />
-    <ClCompile Include="tempp.cpp" />
-    <ClCompile Include="test.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="ThreeByThree.cpp" />
     <ClCompile Include="TicTacToe.cpp" />

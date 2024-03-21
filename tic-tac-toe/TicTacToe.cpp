@@ -24,18 +24,29 @@ TicTacToe* TicTacToe::create_game(int game_mode) {
 
 void TicTacToe::symbol_select()
 {
-    cout << "Select X or O";
+    //cout << "Select X or O";
     cin >> human;
-    ai = human == 'X' ? 'O' : 'X';
-
+    if (human == 'X') {
+        ai = 'O';
+    }
+    else 
+    {
+        ai = 'X';
+        human = 'O';
+    }
     current_player = human;
-
-
 }
 
 void TicTacToe::switch_player() {
 
-    current_player = (current_player == human) ? ai : human;
+    if (current_player == human) {
+        current_player = ai;
+    }
+    else 
+    {
+        current_player = human;
+    }
+
 }
 
 
@@ -43,7 +54,7 @@ bool TicTacToe::can_move() {
     for (const auto& row : board) {
         for (char cell : row) {
             if (cell == ' ') {
-                return true; //board is not full
+                return true; 
             }
         }
     }
@@ -56,11 +67,11 @@ void TicTacToe::human_move(int row, int col)
 {
     if (row >= 0 && row < board.size() && col >= 0 && col < board.size() && board[row][col] == ' ') {
         board[row][col] = human;
-        std::cout << "Player " << human << " moves to " << row << ", " << col << std::endl;
+        cout << "human " << human << " moves to " << row << ", " << col << endl;
     }
 }
 
-int TicTacToe::check_score(const std::vector<std::vector<char>>& board) {
+int TicTacToe::check_score() {
     char winner = check_win().first;
 
    //AI won
@@ -79,7 +90,7 @@ int TicTacToe::check_score(const std::vector<std::vector<char>>& board) {
     return 0;
 }
 
-bool TicTacToe::return_winner() // not needed
+bool TicTacToe::return_winner() 
 {
     if (winner == human) 
     {
@@ -94,10 +105,9 @@ bool TicTacToe::return_winner() // not needed
 
 void TicTacToe::reset()
 {
-    cout << "Resetting the game" << endl;
+    cout << "Resetting the game......" << endl;
     winner = check_win().first;
-    current_player = '\0';  
     winner = '\0';
-    
+    current_player = '\0';  
 }
 

@@ -25,13 +25,12 @@ public:
 	bool symbol_selected;
     bool game_mode_selected;
     int game_mode;
-    bool color_selected ;
+    bool color_selected;
     bool game_over;
 	bool first_move;
     bool name_entered;
 	string output_text;
 
-    void printBoard();
     void render_settings();
     void render_game_board_three();
     void render_game_board_five();
@@ -41,8 +40,7 @@ public:
     void play_again();
     void display_data();
     void exit_game();
-
-    void updateAndRenderOutputText(const string& text);
+    void render_output(const string& text);
     
 };
 #endif  GUI_H

@@ -1,12 +1,12 @@
 [
     {
         "name": "",
-        "result": "TIE",
-        "symbol": "X"
+        "result": "LOSS",
+        "symbol": "O"
     },
     {
-        "name": "kjh",
-        "result": "TIE",
-        "symbol": "X"
+        "name": "karin",
+        "result": "LOSS",
+        "symbol": " "
     }
 ]

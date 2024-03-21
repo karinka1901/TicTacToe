@@ -152,7 +152,6 @@ void GUI::render_settings() {
 	    }
     ImGui::End();
 
-    //W:# L:# T:# 
 
 ////////////////MODE SELECTION////////////////////////
     if (game_mode == 0) { // game mode not selected yet
@@ -221,16 +220,11 @@ void GUI::render_settings() {
         }
         ///////////////////////random start////////////////////////
         //if (symbol_selected) {
-        //    // Initialize random seed
         //    srand(time(0));
-
-        //    // Generate a random number: 0 or 1
         //    int random_start = rand() % 2;
-
-        //    // Decide who starts first based on the random number
         //    if (random_start == 0) {
         //        (*game)->current_player = (*game)->human;
-        //        std::cout << "You start first!";
+        //        cout << "You start first!";
         //        ImGui::Text("You start first!");
         //    }
         //    else {
@@ -238,7 +232,7 @@ void GUI::render_settings() {
         //       
         //        ImGui::Text("AI starts first!");
         //    }
-        //    std::cout << (*game)->current_player << std::endl;
+        //    cout << (*game)->current_player << endl;
       
         //}
     }
@@ -511,8 +505,8 @@ void GUI::display_data()
 
     for (const auto& entry : playerData) {
 	    string name = entry.first;
-        char symbol = ::get<0>(entry.second); // Access first element of tuple
-	    string result = ::get<1>(entry.second); // Access second element of tuple
+        char symbol = ::get<0>(entry.second); 
+	    string result = ::get<1>(entry.second);
 
 	    string text = "Name: " + name + " Symbol: " + string(1, symbol) + " Result: " + result;
         ImGui::Text("%s", text.c_str());
@@ -679,9 +673,9 @@ void GUI::exit_game()
     ImGui::End();
 }
 
-void GUI::updateAndRenderOutputText(const std::string& text) {
-    output_text += text + "\n"; // Append new text with a newline character
-    ImGui::Text(output_text.c_str()); // Render the output text
+void GUI::render_output(const string& text) {
+    output_text += text + "\n"; 
+    ImGui::Text(output_text.c_str()); 
 }
 
 

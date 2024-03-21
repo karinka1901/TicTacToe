@@ -23,8 +23,8 @@ public:
     virtual void symbol_select() = 0;
     virtual void switch_player() = 0;
     virtual bool can_move() = 0;
-    virtual pair<char, vector<pair<int, int>>>check_win() = 0;
-    virtual int check_score(const vector<vector<char>>& board) = 0;
+    virtual pair<char, vector<pair<int, int>>>check_win() = 0; //charv winner and int,int winning cells for the gui
+    virtual int check_score() = 0;
     virtual bool return_winner() = 0;
     virtual void human_move(int row, int col) = 0;
     virtual void ai_move() = 0;

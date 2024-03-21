@@ -20,6 +20,21 @@ bool ThreeByThree::can_move() {
     return TicTacToe::can_move();
 }
 
+void ThreeByThree::human_move(int row, int col)
+{
+    TicTacToe::human_move(row, col);
+}
+
+int ThreeByThree::check_score() {
+    return TicTacToe::check_score();
+}
+
+bool ThreeByThree::return_winner()
+{
+    return TicTacToe::return_winner();
+}
+
+
 pair<char, vector<pair<int, int>>> ThreeByThree::check_win() {
         char winner = '\0';
         free_cell = 0;
@@ -59,8 +74,7 @@ pair<char, vector<pair<int, int>>> ThreeByThree::check_win() {
         }
     
         // DIAGONALS
-        if ((board[0][0] == ai && board[1][1] == ai && board[2][2] == ai ) 
-           ) {
+        if ((board[0][0] == ai && board[1][1] == ai && board[2][2] == ai )) {
             winner = ai;
             winning_cells = { {0, 0}, {1, 1}, {2, 2} };
         }
@@ -70,7 +84,7 @@ pair<char, vector<pair<int, int>>> ThreeByThree::check_win() {
         	winning_cells = { {0, 2}, {1, 1}, {2, 0} };
         }
         else if (board[0][0] == human && board[1][1] == human && board[2][2] == human )
-          {
+        {
             winner = human;
             winning_cells = { {0, 0}, {1, 1}, {2, 2} };
             
@@ -89,22 +103,6 @@ pair<char, vector<pair<int, int>>> ThreeByThree::check_win() {
         return { winner, winning_cells };
     }
 
-
-void ThreeByThree::human_move(int row, int col)
-{
-    TicTacToe::human_move(row, col);
-}
-
-int ThreeByThree::check_score(const std::vector<std::vector<char>>& board) {
-    return TicTacToe::check_score(board);
-}
-
-bool ThreeByThree::return_winner()
-{
-		return TicTacToe::return_winner();
-}
-
-
 int ThreeByThree::minimax(vector<vector<char>>& board, int depth, bool isMaximizing)
 {
     int score = 0;
@@ -116,7 +114,7 @@ int ThreeByThree::minimax(vector<vector<char>>& board, int depth, bool isMaximiz
         else if (winner == human) {
             score = -1;
         }
-        else { // tie
+        else { 
             score = 0;
         }
         return score;
@@ -150,41 +148,38 @@ int ThreeByThree::minimax(vector<vector<char>>& board, int depth, bool isMaximiz
                 }
             }
         }
-        return best_score; // Return the best score
+        return best_score; 
     }
 }
 void ThreeByThree::ai_move()
 {
-
 	pair<int, int> best_move = { -1, -1 };
-    int best_score = INT_MIN; // Initialize bestScore to a very low value
+    int best_score = INT_MIN; 
     for (int i = 0; i < 3; ++i) {
         for (int j = 0; j < 3; ++j) {
             if (board[i][j] == ' ') {
                 
 				cout << "AI considering move at (" << i << ", " << j << "). "<<endl;
                 board[i][j] = ai;
-                int score = minimax(board, 0, false); // Pass depth as 0 for the first call
+                int score = minimax(board, 0, false); 
                 cout << "Score: " << score << endl;
-                board[i][j] = ' '; // Undo the move
+                board[i][j] = ' '; 
 
                 if (score > best_score) {
                     best_score = score;
-
                     best_move = { i, j };
                 }
             }
         }
     }
-     // Make the best move
     board[best_move.first][best_move.second] = ai;
-	std::cout << "AI chose move at (" << best_move.first << ", " << best_move.second << ")." << std::endl;
+	cout << "AI decided to move at (" << best_move.first << ", " << best_move.second << ")" << endl;
   
 }
 
 void ThreeByThree::reset()
 {
-		TicTacToe::reset();
+	TicTacToe::reset();
 }
 
 
