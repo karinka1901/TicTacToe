@@ -2,11 +2,11 @@
     {
         "name": "",
         "result": "LOSS",
-        "symbol": "O"
+        "symbol": " "
     },
     {
         "name": "karin",
         "result": "LOSS",
-        "symbol": " "
+        "symbol": "O"
     }
 ]
