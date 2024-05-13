@@ -1,7 +1,4 @@
 ![image](https://github.com/karinka1901/TicTacToe/assets/60856417/41f18c9b-12e1-4d10-abb4-8d7aaa020f21)
-
-
-# **TIC-TAC-TOE**
 This project is a Tic-Tac-Toe game implemented in C++ utilizing the ImGUI library. The game uses *STL data structures* such as 2D **vector** to manage the board state and **map** for managing player data such as name, symbol, and game outcome, which are saved and read from a **JSON** file.
 The game offers two modes: a classic 3x3 grid and an extended 5x5 grid where the objective is to get four symbols in a row to win. In 5x5 mode computational efficiency is optimized through the implementation of the **minimax algorithm** augmented with alpha-beta pruning as well as through prioritising moves that are closer to the centre.
 
