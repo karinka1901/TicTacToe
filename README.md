@@ -1,3 +1,6 @@
+![image](https://github.com/karinka1901/TicTacToe/assets/60856417/41f18c9b-12e1-4d10-abb4-8d7aaa020f21)
+
+
 # **TIC-TAC-TOE**
 This project is a Tic-Tac-Toe game implemented in C++ utilizing the ImGUI library. The game uses *STL data structures* such as 2D **vector** to manage the board state and **map** for managing player data such as name, symbol, and game outcome, which are saved and read from a **JSON** file.
 The game offers two modes: a classic 3x3 grid and an extended 5x5 grid where the objective is to get four symbols in a row to win. In 5x5 mode computational efficiency is optimized through the implementation of the **minimax algorithm** augmented with alpha-beta pruning as well as through prioritising moves that are closer to the centre.
@@ -25,15 +28,15 @@ The game offers two modes: a classic 3x3 grid and an extended 5x5 grid where the
 
 
 ### **SCREENSHOTS**
-##### GAME MODES
-![image](https://github.com/karinka1901/TicTacToe/assets/60856417/5bdf2229-bfa7-487b-b372-2c8a4ee65da9)   ![image](https://github.com/karinka1901/TicTacToe/assets/60856417/642129c4-a1b7-4755-8806-adb8b788f669)
+![image](https://github.com/karinka1901/TicTacToe/assets/60856417/7bf230e0-8a1c-496c-96f5-22de3a9f2efb)
+![image](https://github.com/karinka1901/TicTacToe/assets/60856417/8c2868fe-81e8-463a-84ce-5a28d35e814e)
+![image](https://github.com/karinka1901/TicTacToe/assets/60856417/96b3397b-e6e7-4a50-88be-82b2c88d34c4)
+![image](https://github.com/karinka1901/TicTacToe/assets/60856417/547f036b-3680-4cd7-a738-86592b3c9684)
 
-##### GAME PROCESS
-![image](https://github.com/karinka1901/TicTacToe/assets/60856417/864c9ee9-40b1-4dd1-84e5-58e7fae64e55) 
-#
-![image](https://github.com/karinka1901/TicTacToe/assets/60856417/315c56fc-a319-498e-934d-7e8863eec9c2)
-#
-![image](https://github.com/karinka1901/TicTacToe/assets/60856417/72861c7c-5777-401e-a716-4bb316995721)
+
+
+
+
 
 
 
